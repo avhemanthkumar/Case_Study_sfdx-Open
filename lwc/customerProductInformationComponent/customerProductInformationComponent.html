@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Customer Card Information" icon-name= "standard:partner_fund_request">
+      <div class="slds-wrap slds-grid">
+        <div class="slds-size_3-of-3">
+          <template if:true={productInfo}>
+            <div class="slds-box">
+              <p>
+                <b>
+                  Customer's Home Country : {getcountryName}
+                </b>
+               </p>
+            </div>
+        </template>
+        </div>
+        </div>
+      <lightning-datatable
+        columns={columns}
+        data={productInfo}
+        key-field="Id"
+        hide-checkbox-column
+      ></lightning-datatable>
+    </lightning-card>
+  </template>

@@ -1,0 +1,88 @@
+
+
+
+{ProductInfoController} -        This is a controller that has a public method named getProductInfo that returns a list of ProductInfoWrapper objects.
+ 
+                                 The method takes two parameters - productId and PriceBookId, which are used to filter the product from Pricebook  entries.
+                                  
+                                 We have another method Named 'getCountryNameFromMdt' to fetch the country name from a custom metadatype record based on the two-letter-country code.
+
+{ProductInfoWrapper} -           This is a simple wrapper class that contains information about a product such as its name, cost per calendar month, card replacement cost, ATM fee for other currencies, and currency code.
+
+{ProductInfoControllerTest} -    This is a test class that contains test methods for the ProductInfoController class.
+ 
+                                 The test methods use the @testSetup annotation to set up test data and create test records for the Account, Pricebook2, Product2, PricebookEntry, Contact, and Case objects.
+ 
+                                 The test methods then call the getProductInfo method of the ProductInfoController class and assert that the returned values are correct.
+
+
+
+{TestDataFactory} -              The TestDataFactory is a class that provides static methods for creating test data for test classes.
+
+                                 It includes methods for creating instances of Pricebook2, Product2, PricebookEntry, Contact, Case, and Account objects with customizable fields. These methods accept a boolean parameter doInsert which
+                                 determines whether the object should be inserted into the database or not.
+
+                                 Additionally, there are getProduct2, getPricebook2, getContact, and getCase methods that create instances of the same objects with preset fields values and a productName, pricebookName, firstName, and
+                                 lastName parameter,respectively.
+
+                                 All methods return the created object and insert it into the database if the doInsert parameter is set to true. The methods can be used in Apex tests to create test data for testing Salesforce
+                                 functionality without affecting the production data.
+
+
+{CustomerDataRESTService} -      The CustomerDataRESTService is a global Apex class that represents a Custom REST API for retrieving product information for a contact with a given UUID. The web service has a URL mapping
+                                 /CustomerDataRESTService/*.
+
+                                 The class defines a nested ProductInfoWrapper class that acts as a container for product information. The wrapper class has four properties: productName, costperCalendarMonth, atmFeeOtherCurrencies, and
+                                 cardReplacementCost.
+
+                                 The web service has a single @HttpGet method named getContactByUUId(). This method takes no parameters and returns a list of ProductInfoWrapper objects. 
+
+                                 The method retrieves the UUID from the request URI, queries the Salesforce database for a contact with the matching UUID, and then calls the buildProductInfoWrapper() method to build a list of product
+                                 information.
+                             
+                                 UUID__c is a case sensitive field that is unique and marked as External Id.
+ 
+                                 The buildProductInfoWrapper() method takes a Contact object as input and returns a list of ProductInfoWrapper objects. 
+
+                                 The method queries the PricebookEntry object to retrieve product information for the given contact. If no product information is found, the method throws a custom exception.
+
+                                 The class also defines a custom exception class named CustomException.
+
+                                 Overall, the CustomerDataRESTService provides a simple way to retrieve product information based on a unique identifier (UUID) from the URL that is mapped to every contact
+                                 record in Salesforce using a REST web service.
+
+{CustomerDataRESTServiceTest} - This is a test class for the "CustomerDataRESTService" Apex class.
+                                 
+                                 The test class has two test methods:
+                                
+                                                          "testGetProductInfo" method:
+
+                                                                It first creates test data including an account, a price book, a product, a price book entry, a contact, and a case record.
+
+                                                                It then retrieves the test case record.
+
+                                                                It calls the "getProductInfo" method of the "ProductInfoController" class with the product and country information from the test case record.
+
+                                                                It then uses assertions to verify that the returned list of product information contains the expected values.
+
+                                                           "testGetProductInfoNoMatch" method:
+
+                                                                It creates test data including an account, a product, a price book, a contact, and a case record with a contact having a product and country that don't have a matching
+                                                                price book entry.
+
+                                                                It then creates a new price book entry with a different product.
+
+                                                                It calls the "getProductInfo" method of the "ProductInfoController" class with the new product and price book entry.
+
+                                                                It then expects an exception to be thrown and uses an assertion to verify that the expected exception message is thrown.
+
+
+{CustomerProductInformationComponent} - This is a Lightning web component to display customer product information returned by ProductInfoController class in LWC-Datatable.
+
+                                        This component consists of .js files which is a Client side controller to retrive the data from Server side controller. 
+                                         
+                                        This component also consists of .html file to display data using LWC-Datatable within <template></template> tags.        
+                            
+
+
+
