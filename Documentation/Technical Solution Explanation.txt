@@ -81,8 +81,17 @@
 
                                         This component consists of .js files which is a Client side controller to retrive the data from Server side controller. 
                                          
-                                        This component also consists of .html file to display data using LWC-Datatable within <template></template> tags.        
-                            
+                                        This component also consists of .html file to display data using LWC-Datatable within <template></template> tags. 
+                                        
+                                        Importing field APIs for the Case object, including PRODUCT_ID and PRICEBOOK_ID.
+                                        
+                                        Using the Get_Product_Info function to retrieve data from the server. 
+                                        
+                                        If successful, map the returned data to the required format and set the productInfo property to the mapped data. 
+                                        
+                                        If an error occurs, display a toast message with the error message.
+                                   
+                                        Defining a getter method named getcountryName that returns the country name from the productInfo array, or an empty string if the array is empty.
 
 
 
